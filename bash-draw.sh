@@ -5,7 +5,6 @@
 #
 #   drawClear()
 #   drawColour(colour = DRAW_COL_DEF, bgColour = DRAW_COL_DEF)
-#
 #   drawPlain(text, newLine = 0)
 #   drawSpecial(text, newLine = 0)
 #   drawHighlight(text, newLine = 0)
@@ -25,14 +24,13 @@
 #   DRAW_COL_GRAY       # Light gray (grey?)
 #
 
-
 # Ensure we are running under bash (will not work under sh or dash etc)
 if [ "$BASH_SOURCE" = "" ]; then
     echo "ERROR: bash-draw requires to be running under bash"
     exit 1
 fi
 
-
+# Colour definitions
 DRAW_COL_DEF=39
 DRAW_COL_BLACK=30
 DRAW_COL_WHITE=97
@@ -42,6 +40,11 @@ DRAW_COL_YELLOW=33
 DRAW_COL_BLUE=34
 DRAW_COL_GRAY=37
 
+# Write escape sequence with no newline
+ESC_WRITE='echo -en'
+
+# Write escape sequence adding newline
+ESC_ECHO='echo -e'
 
 # drawClear()
 drawClear() {
@@ -76,7 +79,6 @@ drawPlain() {
 # drawSpecial(text, newLine = 0)
 drawSpecial() {
     [[ -z "$2" ]] && newLine=0 || newLine="$2"
-
     draw_SetDrawMode
     drawPlain "$1" "$newLine"
     draw_SetWriteMode
@@ -85,7 +87,6 @@ drawSpecial() {
 # drawHighlight(text, newLine = 0)
 drawHighlight() {
     [[ -z "$2" ]] && newLine=0 || newLine="$2"
-
     draw_StartHighlight
     drawPlain "$1" "$newLine"
     draw_EndHighlight
@@ -94,7 +95,6 @@ drawHighlight() {
 # drawPlainAt(left, top, text, newLine = 0)
 drawPlainAt() {
     [[ -z "$4" ]] && newLine=0 || newLine="$4"
-
     draw_MoveTo $1 $2
     drawPlain "$3" "$newLine"
 }
@@ -102,19 +102,10 @@ drawPlainAt() {
 # drawHighlightAt(left, top, text, newLine = 0)
 drawHighlightAt() {
     [[ -z "$4" ]] && newLine=0 || newLine="$4"
-
     draw_StartHighlight
     drawPlainAt "$1" "$2" "$3" "$newLine"
     draw_EndHighlight
 }
-
-
-# Write escape sequence with no newline
-ESC_WRITE='echo -en'
-
-# Write escape sequence adding newline
-ESC_ECHO='echo -e'
-
 
 # Move cursor to specified location
 draw_MoveTo() {

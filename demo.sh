@@ -6,46 +6,31 @@ if [ "$BASH_SOURCE" = "" ]; then
     exit 0
 fi
 
-#
 # Load bash-menu script
-#
-# NOTE: Ensure this is done before using
-#       or overriding menu functions/variables.
-#
-. "bash-menu.sh"
+# Ensure the path is correct to locate bash-menu.sh
+. "/path/to/bash-menu.sh"
 
+# Example Menu Actions
+# They should return 1 to indicate that the menu should continue, or return 0 to signify the menu should exit.
 
-################################
-## Example Menu Actions
-##
-## They should return 1 to indicate that the menu
-## should continue, or return 0 to signify the menu
-## should exit.
-################################
 actionA() {
     echo "Action A"
-
     echo -n "Press enter to continue ... "
     read response
-
     return 1
 }
 
 actionB() {
     echo "Action B"
-
     echo -n "Press enter to continue ... "
     read response
-
     return 1
 }
 
 actionC() {
     echo "Action C"
-
     echo -n "Press enter to continue ... "
     read response
-
     return 1
 }
 
@@ -53,20 +38,10 @@ actionX() {
     return 0
 }
 
+# Setup Example Menu
+# Menu Item Text
+# Ensure uniform width for better menu highlight appearance
 
-################################
-## Setup Example Menu
-################################
-
-## Menu Item Text
-##
-## It makes sense to have "Exit" as the last item,
-## as pressing Esc will jump to last item (and
-## pressing Esc while on last item will perform the
-## associated action).
-##
-## NOTE: If these are not all the same width
-##       the menu highlight will look wonky
 menuItems=(
     "1. Item 1"
     "2. Item 2"
@@ -76,7 +51,7 @@ menuItems=(
     "Q. Exit  "
 )
 
-## Menu Item Actions
+# Menu Item Actions
 menuActions=(
     actionA
     actionB
@@ -86,19 +61,15 @@ menuActions=(
     actionX
 )
 
-## Override some menu defaults
+# Override some menu defaults
 menuTitle=" Demo of bash-menu"
 menuFooter=" Enter=Select, Navigate via Up/Down/First number/letter"
 menuWidth=60
 menuLeft=25
 menuHighlight=$DRAW_COL_YELLOW
 
-
-################################
-## Run Menu
-################################
+# Run Menu
 menuInit
 menuLoop
-
 
 exit 0
